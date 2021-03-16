@@ -4,7 +4,6 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "rm -rf build/ && prettier --write source/ && tsc",
     "start": "node app.js"
   },
   "keywords": [],
