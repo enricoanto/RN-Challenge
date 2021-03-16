@@ -25,7 +25,7 @@ const LoginScreen = ({
   const login = (e:any) => {
     e.preventDefault();
     const object = { email, password };
-    Axios.post("https://fancy-todo-1.herokuapp.com/login", object)
+    Axios.post("https://apps-todo.herokuapp.com/login", object)
       .then(({ data }) => {
         console.log(data)
         return AsyncStorage.setItem("access_token", data.access_token);

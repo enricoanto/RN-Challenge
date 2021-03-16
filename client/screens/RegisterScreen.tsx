@@ -14,7 +14,7 @@ const RegisterScreen = ({
 
   const register = () => {
     const object = { email, password };
-    Axios.post("https://fancy-todo-1.herokuapp.com/register", object)
+    Axios.post("https://apps-todo.herokuapp.com/register", object)
       .then(({ data }) => {
         navigation.navigate("Login");
       })

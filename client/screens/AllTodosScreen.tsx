@@ -18,7 +18,7 @@ const TodosScreen = ({
   useEffect(() => {
     AsyncStorage.getItem("access_token")
       .then((access_token) => {
-        return Axios.get("https://fancy-todo-1.herokuapp.com/todos", {
+        return Axios.get("https://apps-todo.herokuapp.com/todos", {
           headers: {access_token}
         });
       })

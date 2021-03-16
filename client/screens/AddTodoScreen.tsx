@@ -27,7 +27,7 @@ const AddTodo = ({
     const object = { title, description, due_date };
     AsyncStorage.getItem("access_token")
       .then((access_token) => {
-        return Axios.post("https://fancy-todo-1.herokuapp.com/todos", object, {
+        return Axios.post("https://apps-todo.herokuapp.com/todos", object, {
           headers: { access_token },
         });
       })
@@ -54,7 +54,9 @@ const AddTodo = ({
             <Text style={styles.modalText}>Input Todo Success!</Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => {navigation.navigate('All Todos')}}
+              onPress={() => {
+                setVisibleModal(false)
+                navigation.navigate('All Todos')}}
             >
               <Text style={styles.textStyle}>Hide Modal</Text>
             </Pressable>

@@ -19,7 +19,7 @@ class TodoController {
     static async listTodos(req, res, next) {
         try {
             const data = await Todo.findAll({
-                order: [['id', 'ASC']],
+                order: [['due_date', 'ASC']],
                 where: {
                     UserId: req.userData.id
                 }
@@ -32,12 +32,25 @@ class TodoController {
     static async listFalseTodos(req, res, next) {
         try {
             const data = await Todo.findAll({
-                order: [['id', 'ASC']],
+                order: [['due_date', 'ASC']],
                 where: {
-                    status: false
+                    status: "Uncompleted"
                 }
             })
             console.log(data)
+            res.status(200).json(data)
+        } catch (err) {
+            next(err)
+        }
+    }
+    static async listTrueTodos(req, res, next) {
+        try {
+            const data = await Todo.findAll({
+                order: [['due_date', 'ASC']],
+                where: {
+                    status: "Completed"
+                }
+            })
             res.status(200).json(data)
         } catch (err) {
             next(err)
@@ -47,6 +60,7 @@ class TodoController {
         const id = req.params.id
         try {
             const data = await Todo.findByPk(id)
+            console.log(data.due_date.toString())
             res.status(200).json(data)
         } catch (err) {
             next(err)
@@ -77,14 +91,6 @@ class TodoController {
             status: req.body.status,
         }
         try {
-            if (newStatus.status === 'true') {
-                newStatus.status = true
-            } else if (newStatus.status === 'false') {
-                newStatus.status = false
-            } else {
-                next({ name: 'validation boolean' })
-            }
-            console.log(newStatus.status)
             const data = await Todo.update(newStatus, {
                 where: {
                     id: id
