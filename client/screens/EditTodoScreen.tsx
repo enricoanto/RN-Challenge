@@ -17,7 +17,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { BottomTabParamList, User } from "../types";
 // import {useHistory} from 'react-native-router'
 
-const AddTodo = ({
+const EditTodo = ({
   navigation,
 }: StackScreenProps<BottomTabParamList, "Add Todo">) => {
   const [title, setTitle] = useState<string>("");
@@ -64,14 +64,14 @@ const AddTodo = ({
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Input Todo Success!</Text>
+            <Text style={styles.modalText}>Edit Todo Success!</Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => {
                 setVisibleModal(false)
                 navigation.navigate('All Todos')}}
             >
-              <Text style={styles.textStyle}>OK</Text>
+              <Text style={styles.textStyle}>Hide Modal</Text>
             </Pressable>
           </View>
         </View>
@@ -161,4 +161,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddTodo;
+export default EditTodo;

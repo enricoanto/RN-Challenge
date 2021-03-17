@@ -8,7 +8,7 @@ const TodosFalseScreen = () => {
         id: number,
         title: string,
         description: string,
-        status: boolean,
+        status: string,
         due_date: number
     }
     interface Error {
@@ -44,7 +44,7 @@ const TodosFalseScreen = () => {
             data={todos}
             renderItem={({ item }) => {
                 return <TodosComponents
-                key={item.id.toString()}
+                id={item.id}
                 title={item.title}
                 description={item.description}
                 status={item.status}

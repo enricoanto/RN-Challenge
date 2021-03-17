@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import Axios from "axios";
 import TodosComponents from "../components/TodosComponents";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {Todo} from '../types'
+import { Todo } from "../types";
 import { StackScreenProps } from "@react-navigation/stack";
 import { BottomTabParamList, User } from "../types";
-
-
 
 const TodosScreen = ({
   navigation,
@@ -19,14 +23,13 @@ const TodosScreen = ({
     AsyncStorage.getItem("access_token")
       .then((access_token) => {
         return Axios.get("https://apps-todo.herokuapp.com/todos", {
-          headers: {access_token}
+          headers: { access_token },
         });
       })
       .then(({ data }) => {
         setTodos(data);
       })
       .catch((err) => {
-        console.log(err);
         if (err.response) {
           console.log(err.response);
         } else if (err.request) {
@@ -35,11 +38,28 @@ const TodosScreen = ({
           console.log(err);
         }
       });
-  }, [navigation]);
+  }, []);
 
   //Render
   if (todos.length === 0) {
-    return <Text>No Todos</Text>;
+    return (
+      <View style={styles.container}>
+        <Text>No Todos</Text>
+        <TouchableOpacity
+          onPress={() => {
+            AsyncStorage.setItem("access_token", "")
+              .then((data) => {
+                navigation.navigate("Login");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }}
+        >
+          <Text>Logout</Text>
+        </TouchableOpacity>
+      </View>
+    );
   } else {
     return (
       <View style={styles.container}>
@@ -50,7 +70,7 @@ const TodosScreen = ({
           renderItem={({ item }) => {
             return (
               <TodosComponents
-                key={item.id.toString()}
+                id={item.id}
                 title={item.title}
                 description={item.description}
                 status={item.status}
@@ -59,6 +79,19 @@ const TodosScreen = ({
             );
           }}
         />
+        <TouchableOpacity
+          onPress={() => {
+            AsyncStorage.setItem("access_token", "")
+              .then((data) => {
+                navigation.navigate("Login");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }}
+        >
+          <Text>Logout</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -68,15 +101,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
 });
 export default TodosScreen;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import {
   View,
   Text,
@@ -8,33 +8,48 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  Modal
 } from "react-native";
 import Axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StackScreenProps } from "@react-navigation/stack";
 import { BottomTabParamList, User } from "../types";
 
+const reducer = (state: any, action: any) => {
+  switch (action.type) {
+    case "change_email":
+      return { ...state, email: action.payload };
+    case "change_password":
+      return { ...state, password: action.payload };
+    default:
+      return state;
+  }
+};
+
 const LoginScreen = ({
   navigation,
 }: StackScreenProps<BottomTabParamList, "Login">) => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [state, dispatch] = useReducer(reducer, { email: "", password: "" });
+  const { email, password } = state;
 
-  // login connect to server set Access_token
-  const login = (e:any) => {
+  // *login connect to server set Access_token
+  const login = (e: any) => {
     e.preventDefault();
     const object = { email, password };
     Axios.post("https://apps-todo.herokuapp.com/login", object)
       .then(({ data }) => {
-        console.log(data)
         return AsyncStorage.setItem("access_token", data.access_token);
       })
       .then((data) => {
         navigation.navigate("All Todos");
       })
       .catch((err) => {
-        console.log(err.message);
+        if (err.response) {
+          console.log(err.response);
+        } else if (err.request) {
+          console.log(err.request);
+        } else {
+          console.log(err);
+        }
       });
   };
 
@@ -42,16 +57,20 @@ const LoginScreen = ({
   const goToRegister = () => {
     navigation.navigate("Register");
   };
-  
+  const closeKeyboard = () => {
+    Keyboard.dismiss();
+  };
   // render loginscreen
   return (
-    // <TouchableWithoutFeedback onPress={closeKeyboard} accessible={false}>
-      <View>
-        <View>
+    <TouchableWithoutFeedback style={styles.screen} onPress={closeKeyboard} accessible={false}>
+      <View style={styles.container}>
           {/* form-login  */}
+        <View>
           <Text style={styles.textTitle}>Email</Text>
           <TextInput
-            onChangeText={(el:any)=>setEmail(el)}
+            onChangeText={(payload_email) => {
+              dispatch({ type: "change_email", payload: payload_email });
+            }}
             style={styles.input}
             textContentType="emailAddress"
             autoCapitalize="none"
@@ -60,7 +79,9 @@ const LoginScreen = ({
           />
           <Text style={styles.textTitle}>Password</Text>
           <TextInput
-            onChangeText={setPassword}
+            onChangeText={(payload_password) => {
+              dispatch({ type: "change_password", payload: payload_password });
+            }}
             style={styles.input}
             secureTextEntry
             defaultValue=""
@@ -76,10 +97,23 @@ const LoginScreen = ({
         </View>
         <Button title="Login" onPress={login} />
       </View>
-    // </TouchableWithoutFeedback>
+    </TouchableWithoutFeedback>
   );
 };
 const styles = StyleSheet.create({
+  screen: {
+    
+    flexDirection: 'column',
+    justifyContent: 'flex-end'
+  },
+  container: {
+    margin: 20,
+    backgroundColor: '#ffdfd3',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+  
+  },
   input: {
     height: 40,
     marginBottom: 12,

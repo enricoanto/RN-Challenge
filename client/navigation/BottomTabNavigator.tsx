@@ -16,15 +16,53 @@ import {
   TabAddTodo,
   TabLogin,
 } from "../types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
+  const [access_token, setAccess_token] = React.useState("");
   const colorScheme = useColorScheme();
-
+  React.useEffect(() => {
+    AsyncStorage.getItem("access_token")
+      .then((access_token: any) => {
+        setAccess_token(access_token);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+  if (!access_token) {
+    // return (
+    //   <BottomTab.Navigator
+    //     initialRouteName="Login"
+    //     tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+    //   >
+    //     <BottomTab.Screen
+    //       name="Register"
+    //       component={TabRegisterNavigator}
+    //       options={{
+    //         tabBarIcon: ({ color }) => (
+    //           <TabBarIcon name="ios-code" color={color} />
+    //         ),
+    //       }}
+    //     />
+    //     <BottomTab.Screen
+    //       name="Login"
+    //       component={TabLoginNavigator}
+    //       options={{
+    //         tabBarIcon: ({ color }) => (
+    //           <TabBarIcon name="ios-code" color={color} />
+    //         ),
+    //       }}
+    //     />
+    //   </BottomTab.Navigator>
+    // );
+  } else {
+  }
   return (
     <BottomTab.Navigator
-      initialRouteName="All Todos"
+      initialRouteName="Login"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
     >
       <BottomTab.Screen
@@ -92,19 +130,6 @@ function TabTodosNavigator() {
   );
 }
 
-const TabRegisterStack = createStackNavigator<TabRegister>();
-
-function TabRegisterNavigator() {
-  return (
-    <TabRegisterStack.Navigator>
-      <TabRegisterStack.Screen
-        name="TabRegisterScreen"
-        component={RegisterScreen}
-        options={{ headerTitle: "Register" }}
-      />
-    </TabRegisterStack.Navigator>
-  );
-}
 const TabAddTodoStack = createStackNavigator<TabAddTodo>();
 
 function TabAddTodoNavigator() {
@@ -130,5 +155,18 @@ function TabLoginNavigator() {
         options={{ headerTitle: "Login" }}
       />
     </TabLoginStack.Navigator>
+  );
+}
+const TabRegisterStack = createStackNavigator<TabRegister>();
+
+function TabRegisterNavigator() {
+  return (
+    <TabRegisterStack.Navigator>
+      <TabRegisterStack.Screen
+        name="TabRegisterScreen"
+        component={RegisterScreen}
+        options={{ headerTitle: "Register" }}
+      />
+    </TabRegisterStack.Navigator>
   );
 }

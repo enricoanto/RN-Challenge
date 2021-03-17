@@ -8,6 +8,7 @@ export type BottomTabParamList = {
   "Add Todo": undefined;
   Register: undefined;
   Login: undefined;
+  Logout: undefined
 };
 
 export type TabTodos = {
@@ -26,7 +27,7 @@ export interface Todo {
   id: number;
   title: string;
   description: string;
-  status: boolean;
+  status: string;
   due_date: number;
 }
 export type User = {
