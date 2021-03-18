@@ -30,7 +30,7 @@ export default function BottomTabNavigator({navigation}:any) {
 
   if (!access_token) {
     return (
-      <TabLoginStack.Navigator initialRouteName="All Todos">
+      <TabLoginStack.Navigator initialRouteName="Login">
         
         <TabLoginStack.Screen
           name="Login"

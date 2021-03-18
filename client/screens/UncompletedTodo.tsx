@@ -19,36 +19,39 @@ const TodosScreen = ({
 
   //fetch data from server
   useEffect(() => {
-    AsyncStorage.getItem("access_token")
-      .then((access_token) => {
-        return Axios.get("https://apps-todo.herokuapp.com/todos", {
-          headers: { access_token },
+    navigation.addListener('focus', ()=> {
+
+      AsyncStorage.getItem("access_token")
+        .then((access_token) => {
+          return Axios.get("https://apps-todo.herokuapp.com/todos", {
+            headers: { access_token },
+          });
+        })
+        .then(({ data }) => {
+            let newData:any = []
+            data.forEach((el:any)=> {
+                if(el.status ==="Uncompleted") {
+                    newData.push(el)
+                }
+            })
+          setTodos(newData);
+        })
+        .catch((err) => {
+          if (err.response) {
+            console.log(err.response);
+          } else if (err.request) {
+            console.log(err.request);
+          } else {
+            console.log(err);
+          }
         });
-      })
-      .then(({ data }) => {
-          let newData:any = []
-          data.forEach((el:any)=> {
-              if(el.status ==="Uncompleted") {
-                  newData.push(el)
-              }
-          })
-        setTodos(newData);
-      })
-      .catch((err) => {
-        if (err.response) {
-          console.log(err.response);
-        } else if (err.request) {
-          console.log(err.request);
-        } else {
-          console.log(err);
-        }
-      });
-  }, []);
+    });
+    })
 
   //Render
     return (
       <View style={styles.screens}>
-        <Text style={styles.textTitleScreen}>Todos List</Text>
+        <Text style={styles.textTitleScreen}>Uncompleted List</Text>
         <View style={styles.container}>
           <FlatList
           style= {styles.containerTodos}
@@ -62,6 +65,7 @@ const TodosScreen = ({
                   description={item.description}
                   status={item.status}
                   due_date={item.due_date}
+                  navigation={navigation}
                 ></TodosComponents>
               );
             }}

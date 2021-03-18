@@ -27,6 +27,7 @@ export interface Todo {
   description: string;
   status: string;
   due_date: number;
+  navigation: any
 }
 export type User = {
   email: undefined;

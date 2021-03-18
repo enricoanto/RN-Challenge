@@ -17,31 +17,35 @@ const TodosScreen = ({
   navigation,
 }: StackScreenProps<TabTodos, "All Todos">) => {
   const [todos, setTodos] = useState<Todo[]>([]);
+    
 
   //fetch data from server
   useEffect(() => {
-    AsyncStorage.getItem("access_token")
-      .then((access_token) => {
-        return Axios.get("https://apps-todo.herokuapp.com/todos", {
-          headers: { access_token },
+    navigation.addListener('focus', ()=> {
+      AsyncStorage.getItem("access_token")
+        .then((access_token) => {
+          return Axios.get("https://apps-todo.herokuapp.com/todos", {
+            headers: { access_token },
+          });
+        })
+        .then(({ data }) => {
+          setTodos(data);
+        })
+        .catch((err) => {
+          if (err.response) {
+            console.log(err.response);
+          } else if (err.request) {
+            console.log(err.request);
+          } else {
+            console.log(err);
+          }
         });
-      })
-      .then(({ data }) => {
-        setTodos(data);
-      })
-      .catch((err) => {
-        if (err.response) {
-          console.log(err.response);
-        } else if (err.request) {
-          console.log(err.request);
-        } else {
-          console.log(err);
-        }
-      });
-  }, []);
+    });
+    })
   const goToAddTodo = () => {
     navigation.navigate("Add Todo");
   };
+  
   //Render
 
   return (
@@ -77,9 +81,11 @@ const TodosScreen = ({
       <FlatList 
         keyExtractor={(todoId) => todoId.id.toString()}
         data={todos}
+      
         renderItem={({ item }) => {
           return (
             <TodosComponents
+            navigation = {navigation}
               id={item.id}
               title={item.title}
               description={item.description}

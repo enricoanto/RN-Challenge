@@ -17,6 +17,7 @@ interface Todo {
   description: string;
   status: string;
   due_date: number;
+  navigation: any;
 }
 const TodosComponents = (props: Todo) => {
   const [title, setTitle] = useState<string>("");
@@ -25,9 +26,9 @@ const TodosComponents = (props: Todo) => {
   const [visibleModal, setVisibleModal] = useState<any>(false);
   const editTodo = () => {
     setVisibleModal(true);
-    setTitle(props.title)
-    setDescription(props.description)
-  setDue_date(props.due_date.toString().slice(0,10).replace(/-/g, '/'))
+    setTitle(props.title);
+    setDescription(props.description);
+    setDue_date(props.due_date.toString().slice(0, 10).replace(/-/g, "/"));
   };
   const deleteTodo = (id: number) => {
     AsyncStorage.getItem("access_token")
@@ -37,49 +38,56 @@ const TodosComponents = (props: Todo) => {
         });
       })
       .then(({ data }) => {
+        props.navigation.navigate('All Todos')
       })
       .catch((err) => {
         console.log(err.response);
       });
   };
   const editStatus = (todo: any) => {
+      AsyncStorage.getItem("access_token")
+        .then((access_token) => {
+          let status = "";
+          if (todo.status === "Uncompleted") {
+            status = "Completed";
+          } else {
+            status = "Uncompleted";
+          }
+          return Axios.patch(
+            `https://apps-todo.herokuapp.com/todos/${todo.id}`,
+            { status },
+            {
+              headers: { access_token },
+            }
+          );
+        })
+        .then(({ data }) => {
+          props.navigation.navigate('All Todos')
+        })
+        .catch((err) => {
+          console.log(err.response);
+    });
+  };
+  const editTodoButton = (id: any) => {
+    const object = { title, description, due_date };
     AsyncStorage.getItem("access_token")
       .then((access_token) => {
-        let status = "";
-        if (todo.status === "Uncompleted") {
-          status = "Completed";
-        } else {
-          status = "Uncompleted";
-        }
-        return Axios.patch(
-          `https://apps-todo.herokuapp.com/todos/${todo.id}`,
-          { status },
+        return Axios.put(
+          `https://apps-todo.herokuapp.com/todos/${id}`,
+          object,
           {
             headers: { access_token },
           }
         );
       })
-      .then(({ data }) => {})
+      .then(({ data }) => {
+        setVisibleModal(false);
+        props.navigation.navigate('All Todos')
+      })
       .catch((err) => {
         console.log(err.response);
       });
   };
-  const  editTodoButton = (id:any)=> {
-    const object = {title, description, due_date}
-    AsyncStorage.getItem("access_token")
-    .then((access_token) => {
-      return Axios.put(`https://apps-todo.herokuapp.com/todos/${id}`,
-        object, {
-        headers: { access_token },
-      });
-    })
-    .then(({ data }) => {
-      setVisibleModal(false)
-    })
-    .catch((err) => {
-      console.log(err.response);
-    });
-  }
   return (
     <View style={styles.container}>
       <Modal
@@ -106,14 +114,20 @@ const TodosComponents = (props: Todo) => {
                 value={description}
               />
               <Text style={styles.textTitle}>Due Date(yyyy/mm/dd)</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setDue_date}
-              value={due_date}
-              placeholder={"2021/12/31"}
-            />
+              <TextInput
+                style={styles.input}
+                onChangeText={setDue_date}
+                value={due_date}
+                placeholder={"2021/12/31"}
+              />
               <TouchableOpacity>
-                <Text style={styles.textSubmit} onPress={()=>editTodoButton(props.id)}> Edit Todo </Text>
+                <Text
+                  style={styles.textSubmit}
+                  onPress={() => editTodoButton(props.id)}
+                >
+                  {" "}
+                  Edit Todo{" "}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
