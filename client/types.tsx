@@ -12,16 +12,18 @@ export type BottomTabParamList = {
 };
 
 export type TabTodos = {
-  TabTodosScreen: undefined;
+  Login: undefined;
+  "All Todos": undefined;
+  "Add Todo": undefined
 };
 export type TabAddTodo = {
   TabAddTodoScreen: undefined;
 };
-export type TabRegister = {
-  TabRegisterScreen: undefined;
-};
+
 export type TabLogin = {
-  TabLoginScreen: undefined;
+  Login: undefined;
+  Register: undefined;
+  "All Todos": undefined
 };
 export interface Todo {
   id: number;

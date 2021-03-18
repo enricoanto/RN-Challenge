@@ -62,7 +62,9 @@ const LoginScreen = ({
   };
   // render loginscreen
   return (
-    <TouchableWithoutFeedback style={styles.screen} onPress={closeKeyboard} accessible={false}>
+    <View style={styles.screens}>
+      <Text style={styles.textTitleScreen}>Login</Text>
+    <TouchableWithoutFeedback  onPress={closeKeyboard} accessible={false}>
       <View style={styles.container}>
           {/* form-login  */}
         <View>
@@ -85,7 +87,7 @@ const LoginScreen = ({
             style={styles.input}
             secureTextEntry
             defaultValue=""
-          />
+            />
         </View>
         <View style={styles.footContainer}>
           <Text style={styles.footText}>Don't have account?</Text>
@@ -98,21 +100,33 @@ const LoginScreen = ({
         <Button title="Login" onPress={login} />
       </View>
     </TouchableWithoutFeedback>
+    </View>
   );
 };
 const styles = StyleSheet.create({
-  screen: {
-    
+  screens: {
+    flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-end'
+    backgroundColor:'rgb(255,200,176)'
+  },
+  textTitleScreen: {
+    marginLeft: 20,
+    marginTop: 100,
+    fontSize: 50,
+    fontFamily: 'Academy Engraved LET'
   },
   container: {
-    margin: 20,
-    backgroundColor: '#ffdfd3',
+    marginHorizontal: 20,
+    marginTop: 0,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: 'black',
+    backgroundColor:'rgb(255, 240, 200)'
   
+  },
+  textTitle: {
+    marginLeft: 12,
+    marginTop: 12,
   },
   input: {
     height: 40,
@@ -120,10 +134,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
     borderWidth: 1,
     paddingHorizontal: 5,
-  },
-  textTitle: {
-    marginLeft: 12,
-    marginTop: 12,
+    backgroundColor: 'white'
   },
   footText: {
     color: "blue",

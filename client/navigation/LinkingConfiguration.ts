@@ -6,26 +6,9 @@ export default {
     screens: {
       Root: {
         screens: {
-          "All Todos": {
-            screens: {
-              TabTodosScreen: 'all_todos',
-            },
-          },
-          Register: {
-            screens: {
-              TabRegisterScreen: 'register',
-            },
-          },
-          "Add Todo": {
-            screens: {
-              TabAddTodoScreen: 'add_todo',
-            },
-          },
-          Login: {
-            screens: {
-              TabLoginScreen: 'login',
-            },
-          },
+          "All Todos": "all_todos",
+          Login: 'login',
+          Register: 'register',
         },
       },
       NotFound: '*',

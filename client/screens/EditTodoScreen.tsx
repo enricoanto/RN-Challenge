@@ -52,8 +52,9 @@ const EditTodo = ({
   };
 
   return (
+    <View style={styles.screens}>
       <TouchableWithoutFeedback onPress={closeKeyboard} accessible={false}>
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
         <Modal
         animationType="slide"
         transparent={true}
@@ -64,14 +65,14 @@ const EditTodo = ({
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Edit Todo Success!</Text>
+            <Text style={styles.modalText}>Input Todo Success!</Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => {
                 setVisibleModal(false)
                 navigation.navigate('All Todos')}}
             >
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text style={styles.textStyle}>OK</Text>
             </Pressable>
           </View>
         </View>
@@ -98,6 +99,7 @@ const EditTodo = ({
       </View>
     </SafeAreaView>
       </TouchableWithoutFeedback>
+      </View>
   );
 };
 const styles = StyleSheet.create({
@@ -158,7 +160,43 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center"
-  }
+  },
+    screens: {
+      flex: 1,
+      flexDirection: "column",
+      backgroundColor: "rgb(255,200,176)",
+    },
+    textTitleScreen: {
+      marginLeft: 20,
+      marginTop: 100,
+      fontSize: 50,
+      fontFamily: "Academy Engraved LET",
+    },
+    container: {
+      marginHorizontal: 10,
+      
+    },
+    textAddTodo: {
+      fontSize: 25,
+      fontFamily: "Academy Engraved LET",
+      alignItems: 'flex-end'
+    },
+    footText: {
+      color: "blue",
+      marginLeft: 12,
+    },
+    registerText: {
+      color: "red",
+      marginLeft: 5,
+    },
+    footContainer: {
+      flexDirection: "row",
+      marginBottom: 10,
+    },
+    bottomStyle: {
+      flexDirection: "row",
+      justifyContent: "center",
+    },
 });
 
-export default EditTodo;
+export default EditTodo

@@ -54,45 +54,89 @@ const RegisterScreen = ({
     Keyboard.dismiss();
   };
   return (
-    <TouchableWithoutFeedback onPress={closeKeyboard} accessible={false}>
-      <View>
-        <View>
-          <Text style={styles.textTitle}>Email</Text>
-          <TextInput
-            onChangeText={(payload_email) => {
-              dispatch({ type: "change_email", payload:payload_email });
-            }}
-            style={styles.input}
-            textContentType="emailAddress"
-            autoCapitalize="none"
-            keyboardType="email-address"
-          />
-          <Text style={styles.textTitle}>Password</Text>
-          <TextInput
-            onChangeText={(payload_password) => {
-              dispatch({ type: "change_password", payload: payload_password });
-            }}
-            style={styles.input}
-            secureTextEntry
-          />
+    <View style={styles.screens}>
+      <Text style={styles.textTitleScreen}>Register</Text>
+      <TouchableWithoutFeedback onPress={closeKeyboard} accessible={false}>
+        <View style={styles.container}>
+          <View>
+            <Text style={styles.textTitle}>Email</Text>
+            <TextInput
+              onChangeText={(payload_email) => {
+                dispatch({ type: "change_email", payload: payload_email });
+              }}
+              style={styles.input}
+              textContentType="emailAddress"
+              autoCapitalize="none"
+              keyboardType="email-address"
+            />
+            <Text style={styles.textTitle}>Password</Text>
+            <TextInput
+              onChangeText={(payload_password) => {
+                dispatch({
+                  type: "change_password",
+                  payload: payload_password,
+                });
+              }}
+              style={styles.input}
+              secureTextEntry
+            />
+          </View>
+          <View style={styles.bottomStyle}>
+          <Button title="Register" onPress={register}/>
+          <Button title="Cancel" onPress={cancel} />
+          </View>
         </View>
-        <Button title="Register" onPress={register} />
-        <Button title="Cancel" onPress={cancel} />
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </View>
   );
 };
 const styles = StyleSheet.create({
+  screens: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "rgb(255,200,176)",
+  },
+  textTitleScreen: {
+    marginLeft: 20,
+    marginTop: 100,
+    fontSize: 50,
+    fontFamily: "Academy Engraved LET",
+  },
+  container: {
+    marginHorizontal: 20,
+    marginTop: 0,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "black",
+    backgroundColor: "rgb(255, 240, 200)",
+  },
+  textTitle: {
+    marginLeft: 12,
+    marginTop: 12,
+  },
   input: {
     height: 40,
     marginBottom: 12,
     marginHorizontal: 12,
     borderWidth: 1,
     paddingHorizontal: 5,
+    backgroundColor: "white",
   },
-  textTitle: {
+  footText: {
+    color: "blue",
     marginLeft: 12,
-    marginTop: 12,
   },
+  registerText: {
+    color: "red",
+    marginLeft: 5,
+  },
+  footContainer: {
+    flexDirection: "row",
+    marginBottom: 10,
+  },
+  bottomStyle: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  }
 });
 export default RegisterScreen;

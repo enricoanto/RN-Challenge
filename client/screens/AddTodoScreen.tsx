@@ -10,7 +10,7 @@ import {
   Modal,
   Pressable,
   Keyboard,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StackScreenProps } from "@react-navigation/stack";
@@ -23,10 +23,10 @@ const AddTodo = ({
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [due_date, setDue_date] = useState<string>("");
-  const [visibleModal, setVisibleModal] = useState<any>(false)
+  const [visibleModal, setVisibleModal] = useState<any>(false);
 
-  const addTodo = (e:any) => {
-    e.preventDefault()
+  const addTodo = (e: any) => {
+    e.preventDefault();
     const object = { title, description, due_date };
     AsyncStorage.getItem("access_token")
       .then((access_token) => {
@@ -35,7 +35,7 @@ const AddTodo = ({
         });
       })
       .then(({ data }) => {
-        setVisibleModal(true)
+        setVisibleModal(true);
       })
       .catch((err) => {
         if (err.response) {
@@ -52,52 +52,59 @@ const AddTodo = ({
   };
 
   return (
+    <View style={styles.screens}>
       <TouchableWithoutFeedback onPress={closeKeyboard} accessible={false}>
-    <SafeAreaView>
-        <Modal
-        animationType="slide"
-        transparent={true}
-        visible={visibleModal}
-        onRequestClose={() => {
-          setVisibleModal(!visibleModal);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Input Todo Success!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => {
-                setVisibleModal(false)
-                navigation.navigate('All Todos')}}
-            >
-              <Text style={styles.textStyle}>OK</Text>
-            </Pressable>
+        <SafeAreaView style={styles.container}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={visibleModal}
+            onRequestClose={() => {
+              setVisibleModal(!visibleModal);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Input Todo Success!</Text>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => {
+                    setVisibleModal(false);
+                    navigation.navigate("All Todos");
+                  }}
+                >
+                  <Text style={styles.textStyle}>OK</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+          <View>
+            <Text style={styles.textTitle}>Title</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setTitle}
+              value={title}
+            />
+            <Text style={styles.textTitle}>Description</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setDescription}
+              value={description}
+            />
+            <Text style={styles.textTitle}>Due Date(yyyy/mm/dd)</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setDue_date}
+              value={due_date}
+              placeholder={"2021/12/31"}
+            />
+            <TouchableOpacity onPress={addTodo}>
+              <Text style={styles.textSubmit}> add Todo </Text>
+            </TouchableOpacity>
           </View>
-        </View>
-      </Modal>
-      <View>
-      <Text style={styles.textTitle}>Title</Text>
-      <TextInput style={styles.input} onChangeText={setTitle} value={title} />
-      <Text style={styles.textTitle}>Description</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setDescription}
-        value={description}
-      />
-      <Text style={styles.textTitle}>Due Date(mm/dd/yyyy)</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setDue_date}
-        value={due_date}
-        placeholder={"12/31/2021"}
-      />
-      <TouchableOpacity onPress={addTodo}>
-        <Text style={styles.textSubmit}> add Todo </Text>
-      </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+        </SafeAreaView>
       </TouchableWithoutFeedback>
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -115,14 +122,14 @@ const styles = StyleSheet.create({
   textSubmit: {
     margin: 12,
     marginTop: 12,
-    color: 'blue',
-    textAlign: 'center'
+    color: "blue",
+    textAlign: "center",
   },
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    marginTop: 22,
   },
   modalView: {
     margin: 20,
@@ -133,16 +140,16 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
@@ -153,12 +160,47 @@ const styles = StyleSheet.create({
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
+  screens: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "rgb(255,200,176)",
+  },
+  textTitleScreen: {
+    marginLeft: 20,
+    marginTop: 100,
+    fontSize: 50,
+    fontFamily: "Academy Engraved LET",
+  },
+  container: {
+    marginHorizontal: 10,
+  },
+  textAddTodo: {
+    fontSize: 25,
+    fontFamily: "Academy Engraved LET",
+    alignItems: "flex-end",
+  },
+  footText: {
+    color: "blue",
+    marginLeft: 12,
+  },
+  registerText: {
+    color: "red",
+    marginLeft: 5,
+  },
+  footContainer: {
+    flexDirection: "row",
+    marginBottom: 10,
+  },
+  bottomStyle: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
 });
 
 export default AddTodo;
