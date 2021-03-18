@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Axios from "axios";
 import { StackScreenProps } from "@react-navigation/stack";
-import { BottomTabParamList } from "../types";
+import { TabLogin } from "../types";
 
 const reducer = (state: any, action: any) => {
   switch (action.type) {
@@ -25,7 +25,7 @@ const reducer = (state: any, action: any) => {
 
 const RegisterScreen = ({
   navigation,
-}: StackScreenProps<BottomTabParamList, "Register">) => {
+}: StackScreenProps<TabLogin, "Register">) => {
   const [state, dispatch] = useReducer(reducer, { email: "", password: "" });
   const { email, password } = state;
 

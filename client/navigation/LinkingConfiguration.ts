@@ -9,6 +9,8 @@ export default {
           "All Todos": "all_todos",
           Login: 'login',
           Register: 'register',
+          Completed: 'completed',
+          Uncompleted: 'uncompleted'
         },
       },
       NotFound: '*',

@@ -14,12 +14,12 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StackScreenProps } from "@react-navigation/stack";
-import { BottomTabParamList, User } from "../types";
+import { TabTodos} from "../types";
 // import {useHistory} from 'react-native-router'
 
 const AddTodo = ({
   navigation,
-}: StackScreenProps<BottomTabParamList, "Add Todo">) => {
+}: StackScreenProps<TabTodos, "Add Todo">) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [due_date, setDue_date] = useState<string>("");

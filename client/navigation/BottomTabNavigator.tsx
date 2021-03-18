@@ -9,7 +9,9 @@ import TodosScreen from "../screens/AllTodosScreen";
 import AddTodoScreen from "../screens/AddTodoScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import LoginScreen from "../screens/LoginScreen";
-import { BottomTabParamList, TabTodos, TabLogin } from "../types";
+import CompletedScreen from "../screens/CompletedTodo"
+import UncompletedScreen from "../screens/UncompletedTodo"
+import { TabTodos, TabLogin } from "../types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -65,6 +67,16 @@ export default function BottomTabNavigator({navigation}:any) {
           name="Add Todo"
           component={AddTodoScreen}
           options={{ title: "Add Todo" }}
+        />
+        <TabTodosStack.Screen
+          name="Completed"
+          component={CompletedScreen}
+          options={{ title: "Completed Todo" }}
+        />
+        <TabTodosStack.Screen
+          name="Uncompleted"
+          component={UncompletedScreen}
+          options={{ title: "Uncompleted Todo" }}
         />
       </TabTodosStack.Navigator>
     );

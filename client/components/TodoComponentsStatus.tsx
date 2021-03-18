@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
+  Pressable,
   TextInput,
 } from "react-native";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
@@ -37,6 +38,7 @@ const TodosComponents = (props: Todo) => {
         });
       })
       .then(({ data }) => {
+        console.log(data);
       })
       .catch((err) => {
         console.log(err.response);

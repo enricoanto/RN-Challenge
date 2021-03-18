@@ -3,18 +3,14 @@ export type RootStackParamList = {
   NotFound: undefined;
 };
 
-export type BottomTabParamList = {
-  "All Todos": undefined;
-  "Add Todo": undefined;
-  Register: undefined;
-  Login: undefined;
-  Logout: undefined
-};
+
 
 export type TabTodos = {
   Login: undefined;
   "All Todos": undefined;
-  "Add Todo": undefined
+  "Add Todo": undefined;
+  Uncompleted: undefined;
+  Completed: undefined
 };
 export type TabAddTodo = {
   TabAddTodoScreen: undefined;

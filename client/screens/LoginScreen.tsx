@@ -12,7 +12,7 @@ import {
 import Axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StackScreenProps } from "@react-navigation/stack";
-import { BottomTabParamList, User } from "../types";
+import { TabLogin } from "../types";
 
 const reducer = (state: any, action: any) => {
   switch (action.type) {
@@ -27,7 +27,7 @@ const reducer = (state: any, action: any) => {
 
 const LoginScreen = ({
   navigation,
-}: StackScreenProps<BottomTabParamList, "Login">) => {
+}: StackScreenProps<TabLogin, "Login">) => {
   const [state, dispatch] = useReducer(reducer, { email: "", password: "" });
   const { email, password } = state;
 
